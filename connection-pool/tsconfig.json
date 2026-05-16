@@ -3,7 +3,7 @@
     "types": ["node"],
     "target": "ES2022",
     "module": "CommonJS",
-    "rootDir": "./src",
+    "rootDir": "src",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
