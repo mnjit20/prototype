@@ -1,35 +1,10 @@
-import { query } from './database/db';
-import { User } from './types/database';
-import { pool } from './database/pool';
-
-async function getUsers() {
-    const users = await query<User>(
-        'select NOW()'
-    );
-
-    return users;
+function init() {
+    console.log("Sharding module initialized");
 }
 
-async function callMultipleConnections() {
-    const promises = [];
-
-    for (let i = 0; i < 50; i++) {
-        promises.push(getUsers());
-    }
+function main() {
+    console.log("Starting sharding module");
+    init();
 }
 
-callMultipleConnections();
-
-
-async function shutdown() {
-    console.log('Shutting down...');
-
-    await pool.end();
-
-    console.log('DB pool closed');
-
-    process.exit(0);
-}
-
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+main();
