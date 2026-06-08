@@ -1,3 +1,5 @@
+//todo : Implement sharding logic with actual mysql/postgres sql.
+// The system should allow for inserting new users, retrieving user data, and listing all users in a shard.
 const [data, data2, data3] = [new Map(), new Map(), new Map()];
 
 const shard1 = {
