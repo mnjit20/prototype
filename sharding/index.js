@@ -14,7 +14,6 @@ const shard1 = {
     }
 };
 
-
 const shard2 = {
     insert(user) {
         data2.set(user.id, user);
@@ -43,8 +42,6 @@ const shard3 = {
     }
 };
 
-
-
 const shards = [shard1, shard2, shard3];
 
 function getShard(userId) {
@@ -52,23 +49,24 @@ function getShard(userId) {
     return shards[shardIndex];
 }
 
-
-
-
 function init(user) {
     const shard = getShard(user.id);
     shard.insert(user);
+    const userData = shard.get(user.id);
 
     const result = {
         message: "Stored successfully",
-        shard: user.id % 3
+        shard: user.id % shards.length
     };
 
     console.log(result);
+    // console.log("Read User data:", userData);
+
 }
 
 function main() {
     console.log("Starting sharding module");
+
     init({ id: 1, name: "Alice" });
     init({ id: 2, name: "Alice2" });
     init({ id: 3, name: "Alice3" });
