@@ -1,0 +1,81 @@
+const [data, data2, data3] = [new Map(), new Map(), new Map()];
+
+const shard1 = {
+    insert(user) {
+        data.set(user.id, user);
+    },
+
+    get(id) {
+        return data.get(id);
+    },
+
+    all() {
+        return [...data.values()];
+    }
+};
+
+
+const shard2 = {
+    insert(user) {
+        data2.set(user.id, user);
+    },
+
+    get(id) {
+        return data2.get(id);
+    },
+
+    all() {
+        return [...data2.values()];
+    }
+};
+
+const shard3 = {
+    insert(user) {
+        data3.set(user.id, user);
+    },
+
+    get(id) {
+        return data3.get(id);
+    },
+
+    all() {
+        return [...data3.values()];
+    }
+};
+
+
+
+const shards = [shard1, shard2, shard3];
+
+function getShard(userId) {
+    const shardIndex = userId % shards.length;
+    return shards[shardIndex];
+}
+
+
+
+
+function init(user) {
+    const shard = getShard(user.id);
+    shard.insert(user);
+
+    const result = {
+        message: "Stored successfully",
+        shard: user.id % 3
+    };
+
+    console.log(result);
+}
+
+function main() {
+    console.log("Starting sharding module");
+    init({ id: 1, name: "Alice" });
+    init({ id: 2, name: "Alice2" });
+    init({ id: 3, name: "Alice3" });
+    init({ id: 4, name: "Alice4" });
+    init({ id: 5, name: "Alice5" });
+    init({ id: 6, name: "Alice6" });
+    init({ id: 7, name: "Alice7" });
+}
+
+main();
