@@ -1,16 +1,22 @@
 const express = require("express");
 const app = express();
+const logger = require('pino')()
+const pinoHttp = require('pino-http')()
+
 
 let currentMessage = null;
 let waitingClients = [];
-
+// logger.info('hello world')
+app.use(pinoHttp);
 app.get("/messages", (req, res) => {
     console.log("API: messages");
+    req.log.info('API: messages')
     if (currentMessage) {
         return res.json({
             message: currentMessage
         });
     }
+
 
     waitingClients.push(res);
 });
