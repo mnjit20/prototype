@@ -21,7 +21,6 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const { name, email } = req.body;
-
         const result = await pool.query(
             `INSERT INTO users(name, email)
        VALUES($1, $2)
