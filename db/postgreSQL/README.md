@@ -282,4 +282,14 @@ SELECT to_tsvector(
 );
 ```
 
+
+
+Stemming and stop words depend on which language is stored in the text column
+```sql
+SELECT cfgname from pg_ts_config
+```
+
+
+
+
 This is the foundation of PostgreSQL's powerful Full Text Search capabilities.
