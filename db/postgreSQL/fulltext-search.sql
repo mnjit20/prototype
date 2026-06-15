@@ -1,4 +1,5 @@
 
+-- Making inverted index using plain SQL
 -- Strings, arrays, and rows
 
 SELECT string_to_array('Hello world', ' ');
@@ -238,7 +239,7 @@ SELECT * FROM docs_gin;
 -- Lets do some queries
 SELECT COALESCE((SELECT stem FROM docs_stem WHERE word=lower('SQL')), lower('SQL'));
 
--- Handling the stems in queries.  Use the keyword if there is no stem
+-- Handling the stems in q ueries.  Use the keyword if there is no stem
 SELECT DISTINCT id, doc FROM docs AS D
 JOIN docs_gin AS G ON D.id = G.doc_id
 WHERE G.keyword = COALESCE((SELECT stem FROM docs_stem WHERE word=lower('SQL')), lower('SQL'));
