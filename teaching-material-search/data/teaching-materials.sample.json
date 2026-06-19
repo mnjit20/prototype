@@ -1,0 +1,26 @@
+[
+  {
+    "id": "doc_000001",
+    "title": "Freiarbeit: Köln und Nürnberg",
+    "description": "Unterrichtsmaterial zu Köln und Nürnberg für Grundschule.",
+    "tags": ["köln-und-nürnberg", "histo", "geschicte", "9", "kopiervorlage"],
+    "created_at": "2026-03-18T03:14:23.167Z",
+    "preview_image_url": "https://placehold.co/400x300/b45309/ffffff/png?text=K%C3%B6ln%20und%20N%C3%BCrnberg"
+  },
+  {
+    "id": "doc_000002",
+    "title": "Projektarbeit – Klage (Klasse 5)",
+    "description": "Projektarbeit zum Thema Klage. Mit Lösungen zur Selbstkontrolle.",
+    "tags": ["klage", "religion", "religion-ethik", "reli", "KLASSE 6", "Grundschule"],
+    "created_at": "2020-04-20T13:08:44.559Z",
+    "preview_image_url": null
+  },
+  {
+    "id": "doc_000003",
+    "title": "",
+    "description": "Lückentext zum Thema Sonnenenergie.",
+    "tags": ["sonnenenergie", "nawi", "physik", "phy", "67", "Gymnasium"],
+    "created_at": "2022-08-03T11:48:56.423Z",
+    "preview_image_url": "https://placehold.co/400x300/0891b2/ffffff/png?text=Sonnenenergie"
+  }
+]
