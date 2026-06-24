@@ -1,6 +1,6 @@
 # prototype
 
-## meinUnterricht technical challenge
+##  Search Technical challenge
 
 The senior backend challenge solution lives in [`teaching-material-search`](./teaching-material-search).
 

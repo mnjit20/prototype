@@ -1,6 +1,6 @@
 # Teaching Material Search MVP
 
-Node.js + TypeScript backend for the meinUnterricht technical challenge. The MVP ingests messy legacy teaching-material metadata into PostgreSQL, normalizes inconsistent tags into searchable facets, and exposes fast search through a JSON API plus a minimal browser page.
+Node.js + TypeScript backend for the Search technical challenge. The MVP ingests messy legacy teaching-material metadata into PostgreSQL, normalizes inconsistent tags into searchable facets, and exposes fast search through a JSON API plus a minimal browser page.
 
 ## Why this approach
 
