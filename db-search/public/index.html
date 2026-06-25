@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>meinUnterricht — Materialsuche</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+      h1 { font-size: 1.3rem; }
+      input { width: 100%; padding: 0.6rem; font-size: 1rem; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; }
+      .controls { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; font-size: 0.85rem; color: #555; }
+      select { padding: 0.3rem 0.4rem; font-size: 0.85rem; border: 1px solid #ccc; border-radius: 6px; }
+      .meta { color: #666; font-size: 0.85rem; margin: 0.75rem 0; }
+      .card { display: flex; gap: 0.75rem; align-items: flex-start; border: 1px solid #ddd; border-radius: 8px; padding: 0.6rem 0.9rem; margin: 0.6rem 0; }
+      .card-body { flex: 1; min-width: 0; }
+      .thumb {
+        width: 10rem;
+        height: 7.5rem;
+        object-fit: contain;
+        border-radius: 6px;
+        border: 1px solid #e5e5e5;
+        background: #f4f4f4;
+        flex-shrink: 0;
+      }
+      .title { font-weight: 600; }
+      .desc { color: #333; font-size: 0.9rem; margin-top: 0.2rem; }
+      .tags { margin-top: 0.4rem; }
+      .tag { display: inline-block; background: #eef; border-radius: 4px; padding: 1px 6px; margin: 2px; font-size: 0.72rem; }
+      .score { float: right; color: #aaa; font-size: 0.72rem; font-variant-numeric: tabular-nums; }
+    </style>
+  </head>
+  <body>
+    <h1>meinUnterricht — Materialsuche</h1>
+    <input
+      id="q"
+      type="search"
+      placeholder="z. B. Religion Klasse 5, Köln, geschichte…"
+      autofocus
+      autocomplete="off"
+    />
+    <div class="controls">
+      <label for="mode">Suchmodus:</label>
+      <select id="mode" title="auto: Volltext, mit Tippfehler-Fallback · strikt: nur exakte Volltexttreffer · fuzzy: tippfehler-tolerant">
+        <option value="auto">Auto (empfohlen)</option>
+        <option value="strict">Strikt (exakt)</option>
+        <option value="fuzzy">Fuzzy (tippfehler-tolerant)</option>
+      </select>
+    </div>
+    <div class="meta" id="meta"></div>
+    <div id="results"></div>
+
+    <script>
+      const qEl = document.getElementById('q');
+      const modeEl = document.getElementById('mode');
+      const metaEl = document.getElementById('meta');
+      const resultsEl = document.getElementById('results');
+      let timer;
+
+      function esc(s) {
+        return String(s ?? '').replace(/[&<>"']/g, (c) =>
+          ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
+        );
+      }
+
+      async function run() {
+        const q = qEl.value.trim();
+        const mode = modeEl.value;
+        try {
+          const res = await fetch(
+            '/api/search?q=' + encodeURIComponent(q) + '&limit=50&mode=' + mode,
+          );
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+          metaEl.textContent =
+            data.total + ' Treffer' + (q ? ' für „' + q + '“' : ' (neueste zuerst)');
+          resultsEl.innerHTML = data.results
+            .map(
+              (r) => `
+            <div class="card">
+              ${r.preview_image_url
+                ? `<img class="thumb" src="${esc(r.preview_image_url)}" alt="" loading="lazy" />`
+                : ''}
+              <div class="card-body">
+                <span class="score">${r.score ? r.score.toFixed(3) : ''}</span>
+                <div class="title">${esc(r.title)}</div>
+                <div class="desc">${esc(r.description)}</div>
+                <div class="tags">${(r.tags || []).map((t) => '<span class="tag">' + esc(t) + '</span>').join('')}</div>
+              </div>
+            </div>`,
+            )
+            .join('');
+        } catch (err) {
+          metaEl.textContent = 'Fehler bei der Suche: ' + err.message;
+          resultsEl.innerHTML = '';
+        }
+      }
+
+      qEl.addEventListener('input', () => {
+        clearTimeout(timer);
+        timer = setTimeout(run, 200);
+      });
+      modeEl.addEventListener('change', run);
+      run();
+    </script>
+  </body>
+</html>
