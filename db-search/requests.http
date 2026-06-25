@@ -1,0 +1,44 @@
+@base = http://localhost:3000
+
+### health check
+GET {{base}}/health
+
+### search: multi-term German query
+GET {{base}}/api/search?q=Religion Klasse 5&limit=10
+
+### search: strict FTS only
+GET {{base}}/api/search?q=koln&mode=strict&limit=10
+
+### search: explicit fuzzy mode
+GET {{base}}/api/search?q=geschichte&mode=fuzzy&limit=10
+
+### typo tolerance: misspelled query still matches
+GET {{base}}/api/search?q=geschichte
+
+### umlaut folding: ASCII query matches umlaut content
+GET {{base}}/api/search?q=koln
+
+### subject synonyms in the data (reli / religion / ethik)
+GET {{base}}/api/search?q=reli&mode=strict
+
+### browse newest (empty query)
+GET {{base}}/api/search?q=&limit=10
+
+### pagination
+GET {{base}}/api/search?q=&limit=5&offset=5
+
+### fetch a single document
+GET {{base}}/api/documents/doc_000001
+
+### ingest a single document
+POST {{base}}/api/documents
+Content-Type: application/json
+
+{
+  "id": "doc_ingest_demo",
+  "title": "Demo ingest",
+  "description": "Upserted via POST /api/documents",
+  "tags": ["reli", "KLASSE 4"],
+  "created_at": "2024-06-01T00:00:00.000Z",
+  "preview_image_url": null
+}
