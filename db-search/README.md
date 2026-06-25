@@ -1,4 +1,4 @@
-# meinUnterricht — Search MVP
+# DBSearch — Search MVP
 
 A backend that lets teachers search the legacy teaching-materials catalog in
 German and get the most relevant documents back instantly.
@@ -38,7 +38,7 @@ npm run dev
 Build and run the app container. Postgres must be reachable from inside the container:
 
 - **Local Postgres** (from Option 1): run `docker compose up -d` first, then in `.env` set
-  `DATABASE_URL=postgres://postgres:postgres@host.docker.internal:5432/meinunterricht`
+  `DATABASE_URL=postgres://postgres:postgres@host.docker.internal:5432/dbSearch`
   (Mac/Windows Docker Desktop).
 - **Neon**: put your pooled Neon URL in `.env` instead — no local Postgres needed.
 

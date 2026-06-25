@@ -1,4 +1,4 @@
-# 📚 meinUnterricht — Technical Challenge
+# 📚 DBSearch — Technical Challenge
 
 ## Problem Statement
 

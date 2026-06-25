@@ -1,27 +1,27 @@
 services:
   db:
     image: postgres:16
-    container_name: meinunterricht-db
+    container_name: db-search-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: meinunterricht
+      POSTGRES_DB: db-search
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d meinunterricht"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d db-search"]
       interval: 5s
       timeout: 5s
       retries: 10
 
   app:
     build: .
-    container_name: meinunterricht-app
+    container_name: db-search-app
     depends_on:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/meinunterricht
+      DATABASE_URL: postgres://postgres:postgres@db:5432/db-search
       PORT: 3000
       HOST: 0.0.0.0
     ports:

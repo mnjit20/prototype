@@ -3,7 +3,7 @@ import type { ConnectionOptions } from 'tls';
 
 const databaseUrl =
   process.env.DATABASE_URL ??
-  'postgres://postgres:postgres@localhost:5432/meinunterricht';
+  'postgres://postgres:postgres@localhost:5432/test-db';
 
 /** SSL for managed Postgres (Neon, Railway, Render, etc.). */
 function databaseSsl(url: string): ConnectionOptions | undefined {
