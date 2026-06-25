@@ -1,9 +1,9 @@
 {
-  "name": "meinunterricht-search",
+  "name": "db-search",
   "version": "1.0.0",
   "type": "module",
   "private": true,
-  "description": "Search MVP for the meinUnterricht teaching-materials catalog",
+  "description": "Search MVP for the db teaching-materials catalog",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
