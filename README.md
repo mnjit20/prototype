@@ -3,17 +3,10 @@
 ##  Airline checking system
 
 This will show how to run Database transaction, rollback and commit.
+[`README.md`](./airline-checking/approach3/README.md).
+`cd FOLDER_NAME`
 
-It contains a Node.js + TypeScript + PostgreSQL search MVP with:
 
-- deterministic legacy metadata normalization,
-- PostgreSQL full-text search and trigram fallback,
-- ingestion scripts,
-- API examples,
-- user stories,
-- target AWS production architecture,
-- zero-downtime migration notes,
-- AI tool usage documentation.
 
 
 ##  Search Technical challenge
