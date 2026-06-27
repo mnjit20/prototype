@@ -7,7 +7,7 @@ export async function bookSeat(
     user: string,
     seatNo: string
 ) {
-
+    console.log('Request:: ', user);
     const client = await pool.connect();
 
     try {
@@ -44,7 +44,7 @@ export async function bookSeat(
 
         }
 
-        await sleep(Math.random() * 5000);
+        await sleep(Math.random() * 500);
 
         await client.query(
             `

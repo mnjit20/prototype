@@ -18,7 +18,7 @@ async function main() {
 
     const requests = [];
 
-    for (let i = 1; i <= 200; i++) {
+    for (let i = 1; i <= 100; i++) {
 
         requests.push(
             bookSeat(
