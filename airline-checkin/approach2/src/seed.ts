@@ -32,6 +32,6 @@ export async function seed() {
 
     console.log(`Inserted ${count} seats`);
 
-    await pool.end();
+    // await pool.end();
 
 }

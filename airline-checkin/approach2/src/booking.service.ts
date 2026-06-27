@@ -5,7 +5,7 @@ const sleep = (ms: number) =>
 
 export async function bookSeat(
     user: string,
-    seatNo: string
+    seatNo?: string
 ) {
     console.log('Request:: ', user);
     const client = await pool.connect();
@@ -18,10 +18,10 @@ export async function bookSeat(
             `
             SELECT *
             FROM seats
-            WHERE seat_no=$1
+            WHERE booked != true
+            limit 1
             FOR UPDATE
-            `,
-            [seatNo]
+            `
         );
 
         if (result.rows.length === 0) {
@@ -33,6 +33,7 @@ export async function bookSeat(
 
         }
 
+        // console.log('results', result.rows);
         const seat = result.rows[0];
 
         if (seat.booked) {
@@ -45,6 +46,7 @@ export async function bookSeat(
         }
 
         await sleep(Math.random() * 500);
+        const seatNoFromRow = result.rows[0].seat_no;
 
         await client.query(
             `
@@ -54,12 +56,12 @@ export async function bookSeat(
                 booked_at=NOW()
             WHERE seat_no=$2
             `,
-            [user, seatNo]
+            [user, seatNoFromRow]
         );
 
         await client.query("COMMIT");
 
-        console.log(`✅ ${user} booked ${seatNo}`);
+        console.log(`✅ ${user} booked ${seatNoFromRow}`);
 
     } catch (err) {
 
