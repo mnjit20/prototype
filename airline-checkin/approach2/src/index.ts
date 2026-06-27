@@ -1,6 +1,7 @@
 import { pool } from "./db";
 import { bookSeat } from "./booking.service";
 import { seed } from './seed';
+import { performance } from "node:perf_hooks";
 
 const letters = ["A", "B", "C", "D", "E", "F"];
 
@@ -30,6 +31,7 @@ async function main() {
 
     }
     console.time("booking");
+    const start = performance.now();
 
     await Promise.all(requests);
 
@@ -41,8 +43,10 @@ async function main() {
         ORDER BY seat_no
     `);
 
+    const end = performance.now();
     console.table(result.rows);
     console.timeEnd("booking");
+    console.log(`Execution Time: ${((end - start) / 1000).toFixed(2)} ms`);
     await pool.end();
 
 }

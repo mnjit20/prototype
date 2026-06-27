@@ -1,4 +1,5 @@
 import { pool } from "./db";
+import { performance } from 'node:perf_hooks';
 
 const sleep = (ms: number) =>
     new Promise(resolve => setTimeout(resolve, ms));
@@ -12,14 +13,14 @@ export async function bookSeat(
     try {
 
         await client.query("BEGIN");
-
+        const lockStart = performance.now();
         const result = await client.query(
             `
             SELECT *
             FROM seats
             WHERE booked != true
             limit 1
-            FOR UPDATE
+            FOR UPDATE SKIP LOCKED
             `
         );
 
@@ -57,7 +58,10 @@ export async function bookSeat(
             `,
             [user, seatNoFromRow]
         );
-
+        const lockEnd = performance.now();
+        console.log(
+            `${user} waited ${(lockEnd - lockStart).toFixed(2)} ms for the lock`
+        );
         await client.query("COMMIT");
 
         console.log(`✅ ${user} booked ${seatNoFromRow}`);
