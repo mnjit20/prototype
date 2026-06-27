@@ -19,7 +19,7 @@ export async function bookSeat(
             FROM seats
             WHERE booked != true
             limit 1
-            FOR UPDATE
+            FOR UPDATE SKIP LOCKED
             `
         );
 

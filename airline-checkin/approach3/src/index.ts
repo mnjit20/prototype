@@ -24,7 +24,7 @@ async function main() {
     for (let i = 1; i <= 100; i++) {
 
         bookSeat(
-            `User-${i}`
+            `${i}`
         )
 
     }

@@ -24,7 +24,7 @@ async function main() {
 
         requests.push(
             bookSeat(
-                `User-${i}`,
+                `${i}`,
                 randomSeat()
             )
         );
@@ -40,7 +40,7 @@ async function main() {
                booked_by
         FROM seats
         WHERE booked=true
-        ORDER BY seat_no
+        ORDER BY booked_by
     `);
 
     const end = performance.now();
