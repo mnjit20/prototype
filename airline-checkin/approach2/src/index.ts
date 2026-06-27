@@ -29,6 +29,7 @@ async function main() {
         );
 
     }
+    console.time("booking");
 
     await Promise.all(requests);
 
@@ -41,7 +42,7 @@ async function main() {
     `);
 
     console.table(result.rows);
-
+    console.timeEnd("booking");
     await pool.end();
 
 }
