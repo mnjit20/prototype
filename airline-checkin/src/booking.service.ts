@@ -16,7 +16,7 @@ export async function bookSeat(user: string) {
             `
             SELECT *
             FROM seats
-            WHERE seat_no='1A'
+            WHERE booked_by = ""
             FOR UPDATE
             `
         );
