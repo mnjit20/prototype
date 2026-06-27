@@ -3,7 +3,7 @@
 ##  Airline checking system
 
 This will show how to run Database transaction, rollback and commit.
-[`README.md`](./airline-checkin/approach3/README.md).
+[`README.md`](./airline-checkin/approach2/README.md).
 `cd FOLDER_NAME`
 
 
