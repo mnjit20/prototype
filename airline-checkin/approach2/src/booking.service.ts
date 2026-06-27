@@ -33,7 +33,6 @@ export async function bookSeat(
 
         }
 
-        // console.log('results', result.rows);
         const seat = result.rows[0];
 
         if (seat.booked) {
@@ -59,12 +58,9 @@ export async function bookSeat(
             [user, seatNoFromRow]
         );
         const lockEnd = performance.now();
-        console.log(
-            `${user} waited ${(lockEnd - lockStart).toFixed(2)} ms for the lock`
-        );
         await client.query("COMMIT");
 
-        console.log(`✅ ${user} booked ${seatNoFromRow}`);
+        console.log(`✅ ${user} booked ${seatNoFromRow} ------ waited ${(lockEnd - lockStart).toFixed(2)} ms for the lock`);
 
     } catch (err) {
 
