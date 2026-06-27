@@ -1,5 +1,6 @@
 import { pool } from "./db";
 import { bookSeat } from "./booking.service";
+import { seed } from './seed';
 
 const letters = ["A", "B", "C", "D", "E", "F"];
 
@@ -15,7 +16,7 @@ function randomSeat() {
 }
 
 async function main() {
-
+    await seed();
     const requests = [];
 
     for (let i = 1; i <= 100; i++) {

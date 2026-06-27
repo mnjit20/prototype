@@ -2,7 +2,7 @@ import { pool } from "./db";
 
 const letters = ["A", "B", "C", "D", "E", "F"];
 
-async function seed() {
+export async function seed() {
 
     await pool.query("DELETE FROM seats");
 
@@ -35,5 +35,3 @@ async function seed() {
     await pool.end();
 
 }
-
-seed();
