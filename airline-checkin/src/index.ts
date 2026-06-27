@@ -1,29 +1,43 @@
-import { bookSeat } from "./booking.service";
 import { pool } from "./db";
+import { bookSeat } from "./booking.service";
 
-async function runSimulation() {
+const letters = ["A", "B", "C", "D", "E", "F"];
 
-    console.log("--------------------------------");
-    console.log("Flight Booking Simulation");
-    console.log("--------------------------------");
+function randomSeat() {
+
+    const row = Math.floor(Math.random() * 17) + 1;
+
+    const letter =
+        letters[Math.floor(Math.random() * letters.length)];
+
+    return `${row}${letter}`;
+
+}
+
+async function main() {
 
     const requests = [];
 
-    for (let i = 1; i <= 100; i++) {
+    for (let i = 1; i <= 200; i++) {
 
         requests.push(
-            bookSeat(`User-${i}`)
+            bookSeat(
+                `User-${i}`,
+                randomSeat()
+            )
         );
 
     }
 
     await Promise.all(requests);
 
-    console.log("\nSimulation Complete\n");
-
-    const result = await pool.query(
-        "SELECT * FROM seats"
-    );
+    const result = await pool.query(`
+        SELECT seat_no,
+               booked_by
+        FROM seats
+        WHERE booked=true
+        ORDER BY seat_no
+    `);
 
     console.table(result.rows);
 
@@ -31,4 +45,4 @@ async function runSimulation() {
 
 }
 
-runSimulation();
+main();

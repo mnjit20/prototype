@@ -3,7 +3,10 @@ import { pool } from "./db";
 const sleep = (ms: number) =>
     new Promise(resolve => setTimeout(resolve, ms));
 
-export async function bookSeat(user: string) {
+export async function bookSeat(
+    user: string,
+    seatNo: string
+) {
 
     const client = await pool.connect();
 
@@ -11,29 +14,37 @@ export async function bookSeat(user: string) {
 
         await client.query("BEGIN");
 
-        // Lock the row
         const result = await client.query(
             `
             SELECT *
             FROM seats
-            WHERE booked_by = ""
+            WHERE seat_no=$1
             FOR UPDATE
-            `
+            `,
+            [seatNo]
         );
+
+        if (result.rows.length === 0) {
+
+            console.log(`${seatNo} doesn't exist`);
+
+            await client.query("ROLLBACK");
+            return;
+
+        }
 
         const seat = result.rows[0];
 
         if (seat.booked) {
 
-            console.log(`${user} -> Seat already booked`);
+            console.log(`${user} failed. ${seatNo} already booked`);
 
             await client.query("ROLLBACK");
+            return;
 
-            return false;
         }
 
-        // Simulate payment gateway delay
-        await sleep(Math.random() * 500);
+        await sleep(Math.random() * 5000);
 
         await client.query(
             `
@@ -41,24 +52,19 @@ export async function bookSeat(user: string) {
             SET booked=true,
                 booked_by=$1,
                 booked_at=NOW()
-            WHERE seat_no='1A'
+            WHERE seat_no=$2
             `,
-            [user]
+            [user, seatNo]
         );
 
         await client.query("COMMIT");
 
-        console.log(`✅ ${user} booked Seat 1A`);
-
-        return true;
+        console.log(`✅ ${user} booked ${seatNo}`);
 
     } catch (err) {
 
         await client.query("ROLLBACK");
-
         console.error(err);
-
-        return false;
 
     } finally {
 
