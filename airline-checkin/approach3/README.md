@@ -1,4 +1,5 @@
-# This method is running sequently without Promise.all and using locking to show the time its taking which is around 25sec
+# Sequently execution
+- This method is running sequently without Promise.all and using locking to show the time its taking which is around 25sec
 
 
 ### SQL
