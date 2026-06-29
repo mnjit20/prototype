@@ -22,10 +22,7 @@ async function main() {
     const requests = [];
 
     for (let i = 1; i <= 100; i++) {
-
-        bookSeat(
-            `${i}`
-        )
+        bookSeat(i.toString());
 
     }
     console.time("booking");
