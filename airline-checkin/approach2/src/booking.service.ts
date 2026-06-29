@@ -60,7 +60,8 @@ export async function bookSeat(
         const lockEnd = performance.now();
         await client.query("COMMIT");
 
-        console.log(`✅ ${user} booked ${seatNoFromRow} ------ waited ${(lockEnd - lockStart).toFixed(2)} ms for the lock`);
+        // console.log(`✅ ${user} booked ${seatNoFromRow} ------ waited ${(lockEnd - lockStart).toFixed(2)} ms for the lock`);
+        console.log(`✅ ${user} booked ${seatNoFromRow}`);
 
     } catch (err) {
 
