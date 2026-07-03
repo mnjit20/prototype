@@ -1,0 +1,1 @@
+// Ipleent patterns here, exaple: Event Sourcing Pattern 
